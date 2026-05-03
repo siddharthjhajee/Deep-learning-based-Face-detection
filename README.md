@@ -1,90 +1,57 @@
-# YOLOFace
+Deep-learning-based-Face-detection
+A robust face detection implementation leveraging the YOLOv3 (You Only Look Once) architecture and OpenCV's Deep Neural Networks (dnn) module. This project is optimized for real-time inference on images, video files, and live webcam feeds.
 
-# Deep learning based Face detection using the YOLOv3 algorithm
+Overview
+This repository utilizes a YOLOv3 model pre-trained on the WIDER FACE dataset. By using the OpenCV dnn module, the project runs inference efficiently without needing a heavy Darknet installation, supporting models exported from TensorFlow or Keras.
 
+Prerequisites
+Ensure you have Python 3.6+ installed. It is recommended to use a virtual environment to manage dependencies.
 
-## Getting started
+1. Setup Environment
+Bash
+# Install virtualenv
+pip install virtualenv
 
-The YOLOv3 (You Only Look Once) is a state-of-the-art, real-time object detection algorithm. The published model recognizes 80 different objects in images and videos. For more details, you can refer to this [paper](https://pjreddie.com/media/files/papers/YOLOv3.pdf).
+# Create and activate environment
+virtualenv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+2. Install Dependencies
+Bash
+pip install -r requirements.txt
+Required: OpenCV (contrib), TensorFlow, Keras, NumPy, Matplotlib, Pillow.
 
-## YOLOv3's architecture
+Configuration
+Before running the detection scripts, you must provide the pre-trained weights:
 
-![Imgur](assets/yolo-architecture.png)
+Download Weights: Download the yolov3_wider_face.weights file from this link.
 
-Credit: [Ayoosh Kathuria](https://towardsdatascience.com/yolo-v3-object-detection-53fb7d3bfe6b)
+Directory: Place the downloaded file into the model-weights/ directory within the project root.
 
-## OpenCV Deep Neural Networks (dnn module)
+Usage
+The yoloface.py script serves as the main entry point. Use the following flags to specify your input source:
 
-OpenCV `dnn` module supports running inference on pre-trained deep learning models from popular frameworks such as TensorFlow, Torch, Darknet and Caffe.
+Image Inference
+Processes a static image and saves the result to the output directory.
 
-## Prerequisites
+Bash
+python yoloface.py --image samples/input.jpg --output-dir outputs/
+Video Inference
+Processes a video file frame-by-frame.
 
-* Tensorflow
-* opencv-python
-* opencv-contrib-python
-* Numpy
-* Keras
-* Matplotlib
-* Pillow
+Bash
+python yoloface.py --video samples/input.mp4 --output-dir outputs/
+Live Webcam
+Runs real-time face detection using your default camera.
 
-Development for this project will be isolated in Python virtual environment. This allows us to experiment with different versions of dependencies.
+Bash
+python yoloface.py --src 0 --output-dir outputs/
+Results
+The algorithm identifies faces with high confidence scores, even in crowded or poorly lit environments.
 
-There are many ways to install `virtual environment (virtualenv)`, see the [Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/) guide for different platforms, but here are a couple:
+License
+Distributed under the MIT License. See LICENSE.md for more information.
 
-- For Ubuntu
-```bash
-$ pip install virtualenv
-```
+References
+YOLOv3: An Incremental Improvement - Joseph Redmon, Ali Farhadi.
 
-- For Mac
-```bash
-$ pip install --upgrade virtualenv
-```
-
-Create a Python 3.6 virtual environment for this project and activate the virtualenv:
-```bash
-$ virtualenv -p python3.6 yoloface
-$ source ./yoloface/bin/activate
-```
-
-Next, install the dependencies for the this project:
-```bash
-$ pip install -r requirements.txt
-```
-
-## Usage
-
-* Clone this repository
-```bash
-$ git clone https://github.com/sthanhng/yoloface
-```
-
-* For face detection, you should download the pre-trained YOLOv3 weights file which trained on the [WIDER FACE: A Face Detection Benchmark](http://mmlab.ie.cuhk.edu.hk/projects/WIDERFace/index.html) dataset from this [link](https://drive.google.com/file/d/1xYasjU52whXMLT5MtF7RCPQkV66993oR/view?usp=sharing) and place it in the `model-weights/` directory.
-
-* Run the following command:
-
->**image input**
-```bash
-$ python yoloface.py --image samples/outside_000001.jpg --output-dir outputs/
-```
-
->**video input**
-```bash
-$ python yoloface.py --video samples/subway.mp4 --output-dir outputs/
-```
-
->**webcam**
-```bash
-$ python yoloface.py --src 1 --output-dir outputs/
-```
-
-## Sample outputs
-
-![Imgur](assets/outside_000001_yoloface.jpg)
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for more details.
-
-## References
-
+WIDER FACE Dataset - For model training benchmarks.
